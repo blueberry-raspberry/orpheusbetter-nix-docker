@@ -10,7 +10,7 @@ jobs:
         with:
           nix_path: nixpkgs=channel:nixos-unstable
       - run: nix build
-        name: Create Release
+      - name: Create Release
         id: create_release
         uses: actions/create-release@v1
         env:
