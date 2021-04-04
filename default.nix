@@ -57,7 +57,15 @@ let
     echo ${version} > ~/.orpheusbetter/.version
 
     # Run the script
-    orpheusbetter --config /config
+    while :
+    do
+      orpheusbetter --config /config
+      if [ $reset_interval -gt 0 ]; then
+        sleep $reset_interval
+      else
+        break
+      fi
+    done
 
     echo "=== DOCKER CONTAINER SHUTTING DOWN REGULARLY ==="
   '';
@@ -71,6 +79,6 @@ in dockerTools.buildImage {
     Entrypoint = [ script ];
 
     Volumes = { "${home}" = { }; };
-    Env = [ "HOME=${home}" "PATH=${path}" ];
+    Env = [ "HOME=${home}" "PATH=${path}" "reset_interval=3600" ];
   };
 }
