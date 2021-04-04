@@ -1,6 +1,6 @@
 let
   nixpkgsRev = "c0e881852006b132236cbf0301bd1939bb50867e";
-  imageVersion = "4";
+  imageVersion = "5";
 
   nixpkgsURL = "https://github.com/NixOS/Nixpkgs/archive/${nixpkgsRev}.tar.gz";
   pkgsDefault =
@@ -65,7 +65,15 @@ let
     # Run the script
     while :
     do
-      orpheusbetter --config /config
+      # "https://unix.stackexchange.com/a/82602"
+      n=0
+      until [ "$n" -ge 5 ]
+      do
+        (orpheusbetter --config /config && break) || true
+        n=$((n+1))
+        sleep 15
+      done
+
       if [ $reset_interval -gt 0 ]; then
         echo "=== Going to sleep ==="
         sleep $reset_interval
