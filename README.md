@@ -12,8 +12,8 @@ Then, you can run it as follows (replacing with appropriate values):
 
 ```sh
 docker run \
-  --mount "type=bind,source=/your/torrent/client/import/dir,target=/torrents"
-  --mount "type=bind,source=/your/download/folder,target=/downloads"
+  --mount "type=bind,source=/your/torrent/client/import/dir,target=/torrents" \
+  --mount "type=bind,source=/your/download/folder,target=/downloads" \
   --mount "type=bind,source=/path/to/your/config.conf,target=/config" \
   orpheus-better-unstable-SOME_GIBBERISH_REPLACE_THIS
 ```
