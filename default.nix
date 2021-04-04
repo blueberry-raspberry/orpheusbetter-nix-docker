@@ -61,6 +61,7 @@ let
     do
       orpheusbetter --config /config
       if [ $reset_interval -gt 0 ]; then
+        echo "=== Going to sleep ==="
         sleep $reset_interval
       else
         break
