@@ -1,6 +1,6 @@
 let
   nixpkgsRev = "c0e881852006b132236cbf0301bd1939bb50867e";
-  imageVersion = "3";
+  imageVersion = "4";
 
   nixpkgsURL = "https://github.com/NixOS/Nixpkgs/archive/${nixpkgsRev}.tar.gz";
   pkgsDefault =
@@ -45,12 +45,18 @@ let
 
   version = builtins.readFile versionFile;
 
+  # Envioronment variables:
+  path = lib.makeBinPath [ busybox orpheusBetter ];
+  home = "/home/ops";
+
   # The entry point script:
   script = writeScript "entrypoint" ''
     #!${bash}/bin/bash
 
     echo "=== DOCKER OUTPUT: ==="
     set -Eeuxo pipefail
+
+    export PATH=${path}
 
     # Set up the envioronment
     mkdir -p ~/.orpheusbetter
@@ -71,15 +77,12 @@ let
     echo "=== DOCKER CONTAINER SHUTTING DOWN REGULARLY ==="
   '';
 
-  # Envioronment variables:
-  path = lib.makeBinPath [ busybox orpheusBetter ];
-  home = "/home/ops";
 in dockerTools.buildImage {
   name = "orpheus-better-${orpheusBetter.version}-v${imageVersion}";
   config = {
     Entrypoint = [ script ];
 
     Volumes = { "${home}" = { }; };
-    Env = [ "HOME=${home}" "PATH=${path}" "reset_interval=3600" ];
+    Env = [ "HOME=${home}" "reset_interval=3600" ];
   };
 }
