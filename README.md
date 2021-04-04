@@ -1,11 +1,11 @@
 # orpheusbetter-nix-docker
 
-This is a docker image that is automatically built using Nix. You can download the latest version [here](https://github.com/blueberry-raspberry/orpheusbetter-nix-docker/releases/download/refs%2Fheads%2Fmaster/image.tar.gz) When you've grabbed the latest release, you can add it to docker using `docker load`:
+This is a docker image that is automatically built using Nix. You can download the latest version [here](https://github.com/blueberry-raspberry/orpheusbetter-nix-docker/tags). When you've grabbed the latest release, you can add it to docker using `docker load`:
 
 ```sh
 $ docker load < image.tar.gz
 411b6ed7d9f2: Loading layer  291.8MB/291.8MB
-Loaded image: orpheus-better-SOME_GIBBERISH_REPLACE_THIS
+Loaded image: orpheus-better-unstable-SOME_GIBBERISH_REPLACE_THIS
 ```
 
 Then, you can run it as follows (replacing with appropriate values):
