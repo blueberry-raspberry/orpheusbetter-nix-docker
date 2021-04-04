@@ -58,6 +58,8 @@ let
 
     # Run the script
     orpheusbetter --config /config
+
+    echo "=== DOCKER CONTAINER SHUTTING DOWN REGULARLY ==="
   '';
 
   # Envioronment variables:
