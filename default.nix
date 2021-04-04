@@ -69,7 +69,9 @@ let
       n=0
       until [ "$n" -ge 5 ]
       do
-        (orpheusbetter --config /config && break) || true
+        if orpheusbetter --config /config; then
+          break
+        fi
         n=$((n+1))
         sleep 15
       done
