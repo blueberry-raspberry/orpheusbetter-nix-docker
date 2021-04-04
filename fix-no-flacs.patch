@@ -1,0 +1,52 @@
+diff --git a/transcode.py b/transcode.py
+index d784ce7..d7d9e05 100755
+--- a/transcode.py
++++ b/transcode.py
+@@ -87,18 +87,24 @@ def ext_matcher(*extensions):
+     '''
+     return lambda f: os.path.splitext(f)[-1].lower() in extensions
+ 
++def get_flac_files(flac_dir):
++    return [
++        mutagen.flac.FLAC(flac_file)
++        for flac_file in locate(flac_dir, ext_matcher('.flac'))
++    ]
++
+ def is_24bit(flac_dir):
+     '''
+     Returns True if any FLAC within flac_dir is 24 bit.
+     '''
+-    flacs = (mutagen.flac.FLAC(flac_file) for flac_file in locate(flac_dir, ext_matcher('.flac')))
++    flacs = get_flac_files(flac_dir)
+     return any(flac.info.bits_per_sample > 16 for flac in flacs)
+ 
+ def is_multichannel(flac_dir):
+     '''
+     Returns True if any FLAC within flac_dir is multichannel.
+     '''
+-    flacs = (mutagen.flac.FLAC(flac_file) for flac_file in locate(flac_dir, ext_matcher('.flac')))
++    flacs = get_flac_files(flac_dir)
+     return any(flac.info.channels > 2 for flac in flacs)
+ 
+ def needs_resampling(flac_dir):
+@@ -112,7 +118,7 @@ def resample_rate(flac_dir):
+     '''
+     Returns the rate to which the release should be resampled.
+     '''
+-    flacs = (mutagen.flac.FLAC(flac_file) for flac_file in locate(flac_dir, ext_matcher('.flac')))
++    flacs = get_flac_files(flac_dir)
+     original_rate = max(flac.info.sample_rate for flac in flacs)
+     if original_rate % 44100 == 0:
+         return 44100
+@@ -347,6 +353,11 @@ def transcode_release(flac_dir, output_dir, output_format, max_threads=None):
+     # check if we need to resample
+     resample = needs_resampling(flac_dir)
+ 
++    flacs = get_flac_files(flac_dir)
++    if not flacs:
++        print("Warning: no flac files found... This should probably be reported")
++        return flac_dir
++
+     # check if we need to encode
+     if output_format == 'FLAC' and not resample:
+         # XXX: if output_dir is not the same as flac_dir, this may not

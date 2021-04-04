@@ -24,6 +24,11 @@ let
       sha256 = "0d5s3zqm2k9qj51xsxnayzg5agf697bq7hp58vdnwj0q04yqi6q7";
     };
 
+    patches = [
+      # When no flacs are actually found, don't crash...
+      ./fix-no-flacs.patch
+    ];
+
     # Make the version of mechanize required more forgiving
     prePatch = ''
       sed -i 's/==0.2.5/>=0.2.5/' setup.py
