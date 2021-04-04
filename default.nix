@@ -1,8 +1,14 @@
-{ pkgs ? import <nixpkgs> { system = "x86_64-linux"; } }:
+let
+  nixpkgsRev = "c0e881852006b132236cbf0301bd1939bb50867e";
+  imageVersion = "2";
+
+  nixpkgsURL = "https://github.com/NixOS/Nixpkgs/archive/${nixpkgsRev}.tar.gz";
+  pkgsDefault =
+    import (builtins.fetchTarball nixpkgsURL) { system = "x86_64-linux"; };
+in { pkgs ? pkgsDefault }:
 
 with pkgs;
 let
-  imageVersion = "1";
   orpheusBetter = let
     # The programs that only need to be in path locally:
     toolPath = lib.makeBinPath [ mktorrent flac lame sox ];
