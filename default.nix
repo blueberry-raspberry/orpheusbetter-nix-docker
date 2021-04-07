@@ -99,6 +99,6 @@ in dockerTools.buildImage {
     Entrypoint = [ script ];
 
     Volumes = { "${home}" = { }; };
-    Env = [ "HOME=${home}" "reset_interval=3600" ];
+    Env = [ "HOME=${home}" "reset_interval=300" ];
   };
 }
