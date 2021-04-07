@@ -1,6 +1,6 @@
 let
   nixpkgsRev = "c0e881852006b132236cbf0301bd1939bb50867e";
-  imageVersion = "5";
+  imageVersion = "6";
 
   nixpkgsURL = "https://github.com/NixOS/Nixpkgs/archive/${nixpkgsRev}.tar.gz";
   pkgsDefault =
@@ -66,6 +66,7 @@ let
     # Set up the envioronment
     mkdir -p ~/.orpheusbetter
     echo ${version} > ~/.orpheusbetter/.version
+    mkdir -p /tmp  # For SoX.
 
     # Run the script
     while :
@@ -78,12 +79,12 @@ let
           break
         fi
         n=$((n+1))
-        sleep 15
+        sleep 15 || true
       done
 
       if [ $reset_interval -gt 0 ]; then
         echo "=== Going to sleep ==="
-        sleep $reset_interval
+        sleep $reset_interval || true
       else
         break
       fi
