@@ -1,6 +1,6 @@
 let
   nixpkgsRev = "c0e881852006b132236cbf0301bd1939bb50867e";
-  imageVersion = "6";
+  imageVersion = "7";
 
   nixpkgsURL = "https://github.com/NixOS/Nixpkgs/archive/${nixpkgsRev}.tar.gz";
   pkgsDefault =
