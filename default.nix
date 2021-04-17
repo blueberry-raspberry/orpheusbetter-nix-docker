@@ -73,14 +73,8 @@ let
     # Run the script
     while :
     do
-      # "https://unix.stackexchange.com/a/82602"
-      n=0
-      until [ "$n" -ge 5 ]
+      until orpheusbetter --config /config
       do
-        if orpheusbetter --config /config; then
-          break
-        fi
-        n=$((n+1))
         sleep 15 || true
       done
 
