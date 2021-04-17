@@ -64,6 +64,8 @@ let
     export PATH=${path}
 
     # Set up the envioronment
+    mkdir -p /bin
+    /bin/bash --version || ln -s ${bash}/bin/bash /bin/bash
     mkdir -p ~/.orpheusbetter
     echo ${version} > ~/.orpheusbetter/.version
     mkdir -p /tmp  # For SoX.
