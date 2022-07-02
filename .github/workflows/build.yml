@@ -9,7 +9,7 @@ jobs:
       - uses: cachix/install-nix-action@v13
         with:
           nix_path: nixpkgs=channel:nixos-unstable
-      - run: nix build
+      - run: nix-build .
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
